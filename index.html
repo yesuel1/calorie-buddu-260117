@@ -96,6 +96,32 @@
         </div>
     </footer>
     
+    <!-- API Keys Configuration -->
+    <!-- 로컬: config/api-keys.js (gitignore) -->
+    <!-- 프로덕션: config/api-keys.prod.js (git 커밋) -->
+    <script>
+        // 환경 감지: localhost/127.0.0.1 = 로컬, 그 외 = 프로덕션
+        const isProduction = !['localhost', '127.0.0.1'].some(host =>
+            window.location.hostname.includes(host)
+        );
+
+        // 환경에 맞는 API 키 파일 로드
+        const apiKeyScript = document.createElement('script');
+        apiKeyScript.src = isProduction
+            ? 'config/api-keys.prod.js'
+            : 'config/api-keys.js';
+        apiKeyScript.onerror = function() {
+            console.warn('API 키 파일을 로드할 수 없습니다. Mock 모드로 동작합니다.');
+            // API 키가 없어도 Mock 모드로 동작하도록 기본값 설정
+            window.API_KEYS = window.API_KEYS || {
+                foodSafety: 'YOUR_API_KEY_HERE',
+                clarifai: 'YOUR_CLARIFAI_KEY_HERE',
+                googleVision: 'YOUR_GOOGLE_VISION_API_KEY_HERE'
+            };
+        };
+        document.head.appendChild(apiKeyScript);
+    </script>
+
     <!-- TODO: Task 1.1.2 - scripts/app.js 파일 참조 -->
     <script src="scripts/chat.js"></script>
     <script src="scripts/search.js"></script>
