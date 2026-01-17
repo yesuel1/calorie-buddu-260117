@@ -1,0 +1,309 @@
+/* Task 1.2.3: card.css - 영양 정보 카드 */
+
+/* Task 1.2.3: 카드 컨테이너 스타일 (그라디언트 배경) */
+.nutrition-card {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-radius: 16px;
+    padding: var(--spacing-lg);
+    color: var(--white);
+    box-shadow: var(--shadow-lg);
+    margin: var(--spacing-sm) 0;
+}
+
+.nutrition-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nutrition-card-title {
+    font-size: var(--font-size-large);
+    font-weight: 700;
+    flex: 1;
+}
+
+.nutrition-card-amount {
+    font-size: var(--font-size-small);
+    opacity: 0.9;
+}
+
+/* Task 1.2.3: 영양소 항목 레이아웃 */
+.nutrition-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.nutrition-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+}
+
+.nutrition-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-base);
+}
+
+.nutrition-icon {
+    font-size: var(--font-size-large);
+}
+
+.nutrition-value {
+    font-size: var(--font-size-large);
+    font-weight: 600;
+}
+
+/* Task 1.2.3: 단백질 하이라이트 스타일 */
+.nutrition-item.protein-highlight {
+    background: rgba(255, 255, 255, 0.15);
+    padding: var(--spacing-md);
+    border-radius: 12px;
+    margin: var(--spacing-xs) 0;
+}
+
+.nutrition-item.protein-highlight .nutrition-value {
+    font-size: var(--font-size-xlarge);
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.protein-stars {
+    color: var(--secondary-color);
+    font-size: var(--font-size-base);
+}
+
+/* 칼로리 강조 */
+.nutrition-item.calories {
+    font-size: var(--font-size-large);
+    font-weight: 700;
+}
+
+/* 구분선 */
+.nutrition-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: var(--spacing-xs) 0;
+}
+
+/* 카드 푸터 (격려 메시지) */
+.nutrition-card-footer {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    font-size: var(--font-size-base);
+    font-weight: 500;
+}
+
+.encouragement-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+/* Task 1.2.3: 반응형 카드 크기 조정 */
+@media (max-width: 767px) {
+    .nutrition-card {
+        padding: var(--spacing-md);
+    }
+
+    .nutrition-card-title {
+        font-size: var(--font-size-base);
+    }
+
+    .nutrition-value {
+        font-size: var(--font-size-base);
+    }
+
+    .nutrition-item.protein-highlight .nutrition-value {
+        font-size: var(--font-size-large);
+    }
+}
+
+/* 카드 등장 애니메이션 */
+.nutrition-card {
+    animation: cardSlideUp 0.4s ease;
+}
+
+@keyframes cardSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 영양소 진행 바 (선택사항) */
+.nutrition-progress {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: var(--spacing-xs);
+}
+
+.nutrition-progress-bar {
+    height: 100%;
+    background: var(--secondary-color);
+    transition: width 0.5s ease;
+}
+
+/* ============================================================ */
+/* Week 2: 확인 카드 스타일 */
+/* ============================================================ */
+
+.confirm-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    padding: var(--spacing-lg);
+    color: var(--white);
+    box-shadow: var(--shadow-lg);
+    margin: var(--spacing-sm) 0;
+    animation: cardSlideUp 0.4s ease;
+}
+
+.confirm-card-header {
+    font-size: var(--font-size-large);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 이미지 미리보기 */
+.confirm-card-image {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto var(--spacing-md);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-card-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    max-height: 300px;
+}
+
+/* 인식된 음식 이름 컨테이너 */
+.confirm-card-food-name-container {
+    margin: var(--spacing-md) 0;
+}
+
+.confirm-card-food-label {
+    font-size: var(--font-size-small);
+    margin-bottom: var(--spacing-xs);
+    opacity: 0.9;
+    text-align: center;
+}
+
+.confirm-card-food-input {
+    width: 100%;
+    padding: var(--spacing-md);
+    font-size: var(--font-size-xlarge);
+    font-weight: 700;
+    text-align: center;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.confirm-card-food-input:focus {
+    border-color: var(--secondary-color);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.confirm-card-food-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* 버튼 그룹 */
+.confirm-card-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.confirm-button {
+    flex: 1;
+    padding: var(--spacing-md);
+    border: none;
+    border-radius: 12px;
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.confirm-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-button:active {
+    transform: translateY(0);
+}
+
+/* "맞아요" 버튼 (초록색) */
+.confirm-yes {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+.confirm-yes:hover {
+    background: linear-gradient(135deg, #0e8074 0%, #2dd36f 100%);
+}
+
+/* "다시 검색" 버튼 (회색) */
+.confirm-retry {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.confirm-retry:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* 모바일 최적화 */
+@media (max-width: 767px) {
+    .confirm-card {
+        padding: var(--spacing-md);
+    }
+
+    .confirm-card-image {
+        max-width: 250px;
+    }
+
+    .confirm-card-food-input {
+        font-size: var(--font-size-large);
+    }
+
+    .confirm-card-buttons {
+        flex-direction: column;
+    }
+
+    .confirm-button {
+        width: 100%;
+    }
+}

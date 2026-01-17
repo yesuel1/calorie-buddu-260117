@@ -1,0 +1,175 @@
+/* TODO: Task 1.2.2 - 챗봇 UI 스타일링 */
+
+/* TODO: Task 1.2.2 - .chat-container 레이아웃 */
+.chat-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+}
+
+/* TODO: Task 1.2.2 - .messages 스크롤 영역 */
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 스크롤바 커스터마이징 (가벼운 스타일) */
+.messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+/* TODO: Task 1.2.2 - .message 공통 스타일 */
+.message {
+    display: flex;
+    width: 100%;
+    margin-bottom: var(--spacing-xs);
+}
+
+.message-bubble {
+    max-width: 75%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    word-wrap: break-word;
+    line-height: 1.5;
+}
+
+.message-content {
+    font-size: 0.9375rem;
+    white-space: pre-wrap;
+}
+
+/* TODO: Task 1.2.2 - .message.bot 말풍선 (왼쪽 정렬) */
+.message.bot {
+    justify-content: flex-start;
+}
+
+.message.bot .message-bubble {
+    background-color: var(--color-white);
+    color: var(--color-text);
+    border-radius: var(--border-radius-md) var(--border-radius-md) var(--border-radius-md) var(--border-radius-sm);
+    border: 1px solid var(--color-border);
+}
+
+/* TODO: Task 1.2.2 - .message.user 말풍선 (오른쪽 정렬) */
+.message.user {
+    justify-content: flex-end;
+}
+
+.message.user .message-bubble {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: var(--border-radius-md) var(--border-radius-md) var(--border-radius-sm) var(--border-radius-md);
+}
+
+/* TODO: Task 1.2.2 - 입력 영역 (.app-footer 내부) */
+.input-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    max-width: 100%;
+}
+
+/* TODO: Task 1.2.2 - input 스타일 */
+.message-input {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    padding: 0 var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    background-color: var(--color-white);
+    color: var(--color-text);
+    font-family: var(--font-family);
+    font-size: 0.9375rem;
+    outline: none;
+}
+
+.message-input:focus {
+    border-color: var(--color-primary);
+}
+
+.message-input::placeholder {
+    color: var(--color-text-light);
+}
+
+/* TODO: Task 1.2.2 - 전송 버튼 */
+.send-button {
+    height: 44px;
+    min-width: 60px;
+    padding: 0 var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius-lg);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-family: var(--font-family);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+}
+
+.send-button:active {
+    opacity: 0.8;
+}
+
+/* TODO: Task 1.2.2 - 사진 버튼 (아이콘 느낌) */
+.photo-button {
+    height: 44px;
+    width: 44px;
+    padding: 0;
+    border: none;
+    border-radius: var(--border-radius-lg);
+    background-color: transparent;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+}
+
+.photo-button:active {
+    background-color: var(--color-border);
+    opacity: 0.7;
+}
+
+/* TODO: Task 1.2.2 - 모바일 우선 반응형 */
+/* 태블릿 (768px 이상) */
+@media (min-width: 768px) {
+    .message-bubble {
+        max-width: 65%;
+    }
+    
+    .input-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+/* 데스크톱 (1024px 이상) */
+@media (min-width: 1024px) {
+    .message-bubble {
+        max-width: 60%;
+    }
+    
+    .input-container {
+        max-width: 800px;
+    }
+}

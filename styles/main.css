@@ -1,0 +1,123 @@
+/* TODO: Task 1.2.1 - CSS Reset/Normalize */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* TODO: Task 1.2.1 - CSS 변수 정의 (색상, 폰트, 간격) */
+:root {
+    /* 컬러 */
+    --color-background: #f5f7fa;
+    --color-primary: #667eea;
+    --color-primary-dark: #764ba2;
+    --color-accent: #FFD700;
+    --color-text: #333333;
+    --color-text-light: #666666;
+    --color-white: #ffffff;
+    --color-border: #e0e0e0;
+
+    /* TODO: Task 1.2.3 - card.css와의 호환성을 위한 별칭 추가 */
+    /* card.css에서 사용하는 변수명과 호환되도록 별칭을 만듭니다 */
+    --primary-color: var(--color-primary);
+    --primary-dark: var(--color-primary-dark);
+    --secondary-color: var(--color-accent);
+    --white: var(--color-white);
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+
+    /* Border Radius */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+
+    /* 폰트 크기 */
+    /* 모바일 기준으로 설정하고, 태블릿/데스크톱에서는 media query로 조정 */
+    --font-size-small: 0.875rem;   /* 14px */
+    --font-size-base: 1rem;         /* 16px */
+    --font-size-large: 1.125rem;    /* 18px */
+    --font-size-xlarge: 1.25rem;    /* 20px */
+
+    /* 폰트 */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+
+    /* 그림자 */
+    /* 카드나 떠있는 요소에 사용할 그림자 효과 */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
+
+    /* 레이아웃 */
+    --max-width: 100%;
+}
+
+/* TODO: Task 1.2.1 - 기본 폰트 및 body 스타일 */
+body {
+    font-family: var(--font-family);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* TODO: Task 1.2.1 - header / main / footer 기본 레이아웃 */
+.app-header {
+    width: 100%;
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.header-content {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing-md);
+}
+
+.app-header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.app-main {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    min-height: calc(100vh - 140px);
+}
+
+.app-footer {
+    width: 100%;
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-border);
+}
+
+/* TODO: Task 1.2.1 - 반응형 breakpoints 정의 (모바일 우선) */
+/* 모바일 우선 - 기본 스타일은 모바일 (320px~767px) */
+
+/* 태블릿 (768px 이상) */
+@media (min-width: 768px) {
+    :root {
+        --max-width: 600px;
+    }
+}
+
+/* 데스크톱 (1024px 이상) */
+@media (min-width: 1024px) {
+    :root {
+        --max-width: 800px;
+    }
+}
