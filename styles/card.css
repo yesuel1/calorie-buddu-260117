@@ -112,7 +112,45 @@
 }
 
 /* Task 1.2.3: 반응형 카드 크기 조정 */
-@media (max-width: 767px) {
+
+/* 작은 모바일 (320px~374px) */
+@media (max-width: 374px) {
+    .nutrition-card {
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: 12px;
+    }
+
+    .nutrition-card-title {
+        font-size: 0.9375rem;
+    }
+
+    .nutrition-card-amount {
+        font-size: 0.8125rem;
+    }
+
+    .nutrition-label {
+        font-size: 0.875rem;
+    }
+
+    .nutrition-value {
+        font-size: 0.9375rem;
+    }
+
+    .nutrition-item.protein-highlight .nutrition-value {
+        font-size: 1.125rem;
+    }
+
+    .protein-stars {
+        font-size: 0.875rem;
+    }
+
+    .nutrition-card-footer {
+        font-size: 0.875rem;
+    }
+}
+
+/* 모바일 (375px~767px) */
+@media (min-width: 375px) and (max-width: 767px) {
     .nutrition-card {
         padding: var(--spacing-md);
     }
@@ -126,6 +164,80 @@
     }
 
     .nutrition-item.protein-highlight .nutrition-value {
+        font-size: var(--font-size-large);
+    }
+}
+
+/* 태블릿 (768px~1023px) */
+@media (min-width: 768px) {
+    .nutrition-card {
+        padding: var(--spacing-lg) 28px;
+        border-radius: 20px;
+    }
+
+    .nutrition-card-title {
+        font-size: var(--font-size-large);
+    }
+
+    .nutrition-card-amount {
+        font-size: var(--font-size-base);
+    }
+
+    .nutrition-label {
+        font-size: var(--font-size-base);
+    }
+
+    .nutrition-value {
+        font-size: var(--font-size-large);
+    }
+
+    .nutrition-item.protein-highlight {
+        padding: var(--spacing-lg);
+    }
+
+    .nutrition-item.protein-highlight .nutrition-value {
+        font-size: var(--font-size-xlarge);
+    }
+
+    .nutrition-card-footer {
+        font-size: var(--font-size-base);
+        margin-top: var(--spacing-lg);
+        padding-top: var(--spacing-lg);
+    }
+}
+
+/* 데스크톱 (1024px 이상) */
+@media (min-width: 1024px) {
+    .nutrition-card {
+        padding: 28px 32px;
+        border-radius: 24px;
+    }
+
+    .nutrition-card-title {
+        font-size: var(--font-size-xlarge);
+    }
+
+    .nutrition-card-amount {
+        font-size: var(--font-size-large);
+    }
+
+    .nutrition-label {
+        font-size: var(--font-size-large);
+    }
+
+    .nutrition-value {
+        font-size: var(--font-size-xlarge);
+    }
+
+    .nutrition-item.protein-highlight .nutrition-value {
+        font-size: 1.625rem;
+    }
+
+    .protein-stars {
+        font-size: var(--font-size-large);
+    }
+
+    .nutrition-card-footer {
         font-size: var(--font-size-large);
     }
 }
@@ -286,7 +398,40 @@
 }
 
 /* 모바일 최적화 */
-@media (max-width: 767px) {
+
+/* 작은 모바일 (320px~374px) */
+@media (max-width: 374px) {
+    .confirm-card {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .confirm-card-header {
+        font-size: var(--font-size-base);
+    }
+
+    .confirm-card-image {
+        max-width: 200px;
+    }
+
+    .confirm-card-food-input {
+        font-size: var(--font-size-large);
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .confirm-card-buttons {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+
+    .confirm-button {
+        width: 100%;
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.9375rem;
+    }
+}
+
+/* 모바일 (375px~767px) */
+@media (min-width: 375px) and (max-width: 767px) {
     .confirm-card {
         padding: var(--spacing-md);
     }
@@ -305,5 +450,58 @@
 
     .confirm-button {
         width: 100%;
+    }
+}
+
+/* 태블릿 (768px~1023px) */
+@media (min-width: 768px) {
+    .confirm-card {
+        padding: var(--spacing-lg) 28px;
+    }
+
+    .confirm-card-header {
+        font-size: var(--font-size-xlarge);
+    }
+
+    .confirm-card-image {
+        max-width: 350px;
+    }
+
+    .confirm-card-food-input {
+        font-size: var(--font-size-xlarge);
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+
+    .confirm-card-buttons {
+        flex-direction: row;
+    }
+
+    .confirm-button {
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: var(--font-size-large);
+    }
+}
+
+/* 데스크톱 (1024px 이상) */
+@media (min-width: 1024px) {
+    .confirm-card {
+        padding: 28px 32px;
+    }
+
+    .confirm-card-header {
+        font-size: 1.625rem;
+    }
+
+    .confirm-card-image {
+        max-width: 400px;
+    }
+
+    .confirm-card-food-input {
+        font-size: 1.625rem;
+        padding: var(--spacing-lg);
+    }
+
+    .confirm-button {
+        font-size: var(--font-size-large);
     }
 }

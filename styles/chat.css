@@ -172,25 +172,137 @@
 }
 
 /* TODO: Task 1.2.2 - 모바일 우선 반응형 */
-/* 태블릿 (768px 이상) */
+
+/* 작은 모바일 (320px~374px) */
+@media (max-width: 374px) {
+    .chat-container {
+        padding: var(--spacing-sm);
+    }
+
+    .message-bubble {
+        max-width: 85%;
+        padding: var(--spacing-sm) var(--spacing-sm);
+        font-size: 0.875rem;
+    }
+
+    .message-input {
+        font-size: 0.875rem;
+        height: 40px;
+    }
+
+    .send-button {
+        height: 40px;
+        min-width: 50px;
+        font-size: 0.875rem;
+    }
+
+    .photo-button {
+        height: 40px;
+        width: 40px;
+        font-size: 1.25rem;
+    }
+}
+
+/* 모바일 (375px~767px) */
+@media (min-width: 375px) and (max-width: 767px) {
+    .message-bubble {
+        max-width: 80%;
+    }
+
+    .input-container {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+}
+
+/* 태블릿 (768px~1023px) */
 @media (min-width: 768px) {
     .message-bubble {
         max-width: 65%;
+        padding: var(--spacing-md) var(--spacing-lg);
     }
-    
+
+    .message-content {
+        font-size: 1rem;
+    }
+
     .input-container {
         max-width: 600px;
         margin: 0 auto;
+        padding: var(--spacing-lg);
+    }
+
+    .message-input {
+        height: 48px;
+        font-size: 1rem;
+    }
+
+    .send-button {
+        height: 48px;
+        min-width: 70px;
+        font-size: 1rem;
+    }
+
+    .photo-button {
+        height: 48px;
+        width: 48px;
+        font-size: 1.625rem;
+    }
+
+    /* 호버 효과 추가 (터치 디바이스가 아닌 경우) */
+    .send-button:hover {
+        transform: translateY(-2px);
+    }
+
+    .photo-button:hover {
+        background-color: rgba(0, 0, 0, 0.05);
     }
 }
 
 /* 데스크톱 (1024px 이상) */
 @media (min-width: 1024px) {
-    .message-bubble {
-        max-width: 60%;
+    .chat-container {
+        padding: var(--spacing-lg);
     }
-    
+
+    .message-bubble {
+        max-width: 55%;
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+
+    .message-content {
+        font-size: 1.0625rem;
+    }
+
     .input-container {
         max-width: 800px;
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+
+    .message-input {
+        height: 52px;
+        font-size: 1.0625rem;
+    }
+
+    .send-button {
+        height: 52px;
+        min-width: 80px;
+        font-size: 1.0625rem;
+    }
+
+    .photo-button {
+        height: 52px;
+        width: 52px;
+        font-size: 1.75rem;
+    }
+}
+
+/* 큰 데스크톱 (1440px 이상) */
+@media (min-width: 1440px) {
+    .message-bubble {
+        max-width: 50%;
+    }
+
+    .input-container {
+        max-width: 900px;
     }
 }

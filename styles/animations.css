@@ -1,0 +1,430 @@
+/* ============================================================ */
+/* Week 3: UX 개선 - 애니메이션 & 트랜지션 */
+/* ============================================================ */
+
+/* 전역 트랜지션 설정 */
+* {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================ */
+/* 로딩 스피너 */
+/* ============================================================ */
+
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--color-white);
+    animation: spin 0.8s linear infinite;
+}
+
+.loading-spinner.large {
+    width: 40px;
+    height: 40px;
+    border-width: 4px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 로딩 메시지 (타이핑 애니메이션) */
+.loading-dots::after {
+    content: '';
+    animation: loadingDots 1.5s steps(4, end) infinite;
+}
+
+@keyframes loadingDots {
+    0%, 20% {
+        content: '';
+    }
+    40% {
+        content: '.';
+    }
+    60% {
+        content: '..';
+    }
+    80%, 100% {
+        content: '...';
+    }
+}
+
+/* ============================================================ */
+/* 메시지 등장 애니메이션 */
+/* ============================================================ */
+
+.message {
+    animation: messageSlideIn 0.3s ease-out;
+}
+
+.message.bot {
+    animation: messageSlideInLeft 0.3s ease-out;
+}
+
+.message.user {
+    animation: messageSlideInRight 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes messageSlideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes messageSlideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ============================================================ */
+/* 버튼 인터랙션 효과 */
+/* ============================================================ */
+
+/* Ripple 효과 */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.ripple:active::after {
+    width: 200px;
+    height: 200px;
+}
+
+/* 버튼 호버 효과 강화 */
+@media (hover: hover) {
+    .send-button:hover,
+    .confirm-button:hover {
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        transform: translateY(-2px) scale(1.02);
+    }
+
+    .photo-button:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        transform: scale(1.1);
+    }
+}
+
+/* 버튼 클릭 효과 */
+button:active,
+.send-button:active,
+.photo-button:active,
+.confirm-button:active {
+    transform: scale(0.95);
+}
+
+/* ============================================================ */
+/* 입력 포커스 효과 */
+/* ============================================================ */
+
+.message-input:focus,
+.confirm-card-food-input:focus {
+    animation: inputFocusPulse 0.3s ease-out;
+}
+
+@keyframes inputFocusPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(102, 126, 234, 0);
+    }
+    100% {
+        box-shadow: 0 2px 12px rgba(102, 126, 234, 0.3);
+    }
+}
+
+/* ============================================================ */
+/* 카드 등장 애니메이션 (향상) */
+/* ============================================================ */
+
+.nutrition-card,
+.confirm-card {
+    animation: cardSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cardSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================================ */
+/* 스켈레톤 로딩 UI */
+/* ============================================================ */
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.1) 25%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.1) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeletonLoading 1.5s ease-in-out infinite;
+    border-radius: var(--border-radius-md);
+}
+
+@keyframes skeletonLoading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.skeleton-card {
+    width: 100%;
+    height: 200px;
+}
+
+.skeleton-text {
+    width: 80%;
+    height: 20px;
+    margin: var(--spacing-sm) 0;
+}
+
+.skeleton-text.short {
+    width: 50%;
+}
+
+/* ============================================================ */
+/* 페이드 인/아웃 */
+/* ============================================================ */
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+.fade-out {
+    animation: fadeOut 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* ============================================================ */
+/* 에러 Shake 애니메이션 */
+/* ============================================================ */
+
+.shake {
+    animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+/* ============================================================ */
+/* 성공 체크 애니메이션 */
+/* ============================================================ */
+
+.success-check {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: successPopIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.success-check::after {
+    content: '✓';
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    animation: checkmarkDraw 0.3s 0.2s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes successPopIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes checkmarkDraw {
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================================ */
+/* 스크롤 부드럽게 */
+/* ============================================================ */
+
+html {
+    scroll-behavior: smooth;
+}
+
+.messages {
+    scroll-behavior: smooth;
+}
+
+/* ============================================================ */
+/* 숫자 카운트업 효과 (선택사항) */
+/* ============================================================ */
+
+.count-up {
+    animation: countUp 0.8s ease-out;
+}
+
+@keyframes countUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ============================================================ */
+/* 펄스 효과 (주목을 끌 때) */
+/* ============================================================ */
+
+.pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ============================================================ */
+/* 바운스 효과 */
+/* ============================================================ */
+
+.bounce {
+    animation: bounce 1s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* ============================================================ */
+/* 성능 최적화 */
+/* ============================================================ */
+
+/* GPU 가속 활성화 */
+.nutrition-card,
+.confirm-card,
+.message,
+.send-button,
+.photo-button {
+    will-change: transform, opacity;
+}
+
+/* 애니메이션 완료 후 will-change 제거 */
+.animation-complete {
+    will-change: auto;
+}
+
+/* ============================================================ */
+/* 접근성: 모션 감소 설정 존중 */
+/* ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

@@ -24,33 +24,41 @@ async function handleSearch(query) {
         // 1. 입력 파싱
         const parsed = parseInput(query);
 
+        if (!parsed.foodName) {
+            // 음식명이 없는 경우
+            const validationError = new Error('음식 이름이 필요합니다');
+            validationError.name = 'ValidationError';
+            throw validationError;
+        }
+
         // 2. 음식 검색
         let foodData = await searchFood(parsed.foodName);
 
         if (!foodData) {
-            // 검색 실패
-            addMessage('bot', `"${parsed.foodName}"를 찾을 수 없어요 😅\n다른 이름으로 검색해보시겠어요?`);
-            return;
+            // 검색 실패 - NOT_FOUND 에러 발생
+            const notFoundError = new Error(`"${parsed.foodName}"를 찾을 수 없습니다`);
+            notFoundError.status = 404;
+            throw notFoundError;
         }
 
         // 3. 영양 정보 계산
-        // calculateNutrition() 함수는 음식의 100g 기준 데이터를 받아서
-        // 사용자가 입력한 분량에 맞게 영양 정보를 계산합니다.
         const nutritionData = calculateNutrition(foodData, parsed.amount);
 
         // 4. 영양 정보 카드 생성 및 표시
-        // createNutritionCard() 함수는 영양 정보를 받아서 예쁜 HTML 카드를 만듭니다.
-        // 이 카드에는 칼로리, 단백질, 탄수화물, 지방 정보와 격려 메시지가 포함됩니다.
         const nutritionCard = createNutritionCard(nutritionData);
-
-        // addMessage() 함수는 텍스트뿐만 아니라 HTML 요소도 받을 수 있습니다.
-        // 'bot' 메시지로 카드를 전달하면 채팅창에 카드가 표시됩니다.
         addMessage('bot', nutritionCard);
 
     } catch (error) {
-        // 에러 로깅 (디버깅용)
-        console.error('검색 중 오류:', error);
-        addMessage('bot', '검색 중 오류가 발생했어요 😢\n잠시 후 다시 시도해주세요!');
+        // Week 3: 중앙 집중식 에러 핸들러 사용
+        if (window.ErrorHandler) {
+            window.ErrorHandler.handle(error, 'search', {
+                retryFunction: () => handleSearch(query)
+            });
+        } else {
+            // 폴백: ErrorHandler가 없는 경우 기본 메시지
+            console.error('검색 중 오류:', error);
+            addMessage('bot', '검색 중 오류가 발생했어요 😢\n잠시 후 다시 시도해주세요!');
+        }
     }
 }
 
@@ -82,8 +90,22 @@ async function handlePhotoUpload(file) {
         addMessage('bot', confirmCard);
 
     } catch (error) {
-        console.error('사진 업로드 중 오류:', error);
-        addMessage('bot', '사진 처리 중 오류가 발생했어요 😢\n다시 시도해주세요!');
+        // Week 3: 중앙 집중식 에러 핸들러 사용
+        if (window.ErrorHandler) {
+            window.ErrorHandler.handle(error, 'photo', {
+                retryFunction: () => {
+                    // 재시도 시 파일 입력 다시 열기
+                    const fileInput = document.getElementById('image-input');
+                    if (fileInput) {
+                        fileInput.click();
+                    }
+                }
+            });
+        } else {
+            // 폴백: ErrorHandler가 없는 경우 기본 메시지
+            console.error('사진 업로드 중 오류:', error);
+            addMessage('bot', '사진 처리 중 오류가 발생했어요 😢\n다시 시도해주세요!');
+        }
     }
 }
 

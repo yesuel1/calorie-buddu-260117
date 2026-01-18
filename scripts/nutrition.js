@@ -158,36 +158,65 @@ function formatNutritionText(nutritionData) {
 }
 
 /**
- * 운동 후 영양 결과에 따라 추천 멘트를 생성합니다
+ * 운동 후 영양 결과에 따라 추천 멘트를 생성합니다.
+ *
+ * 판단 기준 (우선순위 순):
+ * 1. 단백질 30g+ → 고단백, 근육 회복
+ * 2. 단백질 20g+ → 충분한 단백질
+ * 3. 탄수화물 30g+ (단백질 30 미만) → 에너지 보충
+ * 4. 균형: 단백질 10g+, 지방 10g 미만, 150~400 kcal → 정말 균형 잡힌 식사
+ * 5. 고지방·고탄수 (지방 10+, 탄수 20+, 단백질 20 미만) → 패스트푸드/가공식 느낌, "가끔"
+ * 6. 단백질 있지만 지방 높음 (단백 10+, 지방 10+, 탄수 20 미만) → 채소 보완 추천
+ * 7. 저칼로리 (< 150) → 가벼운 식사, 보충 추천
+ * 8. 고칼로리 (> 400) → 벌크업/장시간 운동
+ *
  * @param {Object} nutrition - 계산된 영양 정보
- *   { protein: number, carbs: number, calories: number }
+ *   { protein: number, carbs: number, fat: number, calories: number }
  * @returns {string} 짧고 긍정적인 한국어 멘트
  */
 function getPostWorkoutMessage(nutrition) {
-    const { protein, carbs, calories } = nutrition;
+    const { protein, carbs, fat, calories } = nutrition;
 
-    // 단백질이 높은 경우 (30g 이상)
+    // 1. 단백질 30g 이상: 고단백
     if (protein >= 30) {
         return '💪 완벽한 단백질 보충이에요! 근육 회복에 최고입니다!';
     }
 
+    // 2. 단백질 20g 이상: 충분한 단백질
     if (protein >= 20) {
         return '👍 좋은 단백질 섭취네요! 운동 후 식사로 딱이에요!';
     }
 
+    // 3. 탄수화물 30g 이상: 에너지 보충 (단백질 30 미만일 때)
     if (carbs >= 30) {
         return '⚡ 에너지 보충 완료! 운동 전후로 좋은 선택이에요!';
     }
 
-    if (calories >= 150 && calories <= 300) {
+    // 4. 균형 잡힌 식사: 단백질 10g+, 지방 10g 미만, 150~400 kcal
+    //    → 지방·탄수가 높지 않은 깨끗한 식사에만 "균형" 사용 (햄버거·패스트푸드 제외)
+    if (protein >= 10 && fat < 10 && calories >= 150 && calories <= 400) {
         return '✨ 균형 잡힌 식사네요! 다른 음식과 함께 드시면 더 좋아요!';
     }
 
+    // 5. 고지방·고탄수 (지방 10+, 탄수 20+, 단백질 20 미만): 패스트푸드·가공식 느낌
+    //    → "가끔 먹기", 보완 추천 (햄버거, 피자 한 조각 등)
+    if (fat >= 10 && carbs >= 20 && protein < 20) {
+        return '🍔 가끔 먹기엔 괜찮아요! 단백질·채소를 보태면 더 좋아요!';
+    }
+
+    // 6. 단백질 있지만 지방 높음 (단백 10+, 지방 10+, 탄수 20 미만): ex. 계란, 삼겹살
+    //    → 단백질은 괜찮으나 지방이 있어 채소 보완 추천
+    if (protein >= 10 && fat >= 10 && carbs < 20) {
+        return '💪 단백질은 괜찮아요! 지방이 있어서 채소를 곁들면 더 좋아요!';
+    }
+
+    // 7. 저칼로리: 가벼운 간식, 보충 필요
     if (calories < 150) {
         return '🥗 가벼운 식사네요! 단백질이나 탄수화물을 추가로 드시면 좋아요!';
     }
 
-    if (calories > 300) {
+    // 8. 고칼로리: 벌크업, 장시간 운동
+    if (calories > 400) {
         return '🔥 에너지 충전 완료! 벌크업이나 장시간 운동에 좋아요!';
     }
 
@@ -227,6 +256,10 @@ function createNutritionCard(nutritionData) {
     // 이 클래스는 card.css에 정의된 스타일을 적용받습니다.
     const card = document.createElement('div');
     card.className = 'nutrition-card';
+
+    // Week 3: 접근성 개선 - ARIA 속성 추가
+    card.setAttribute('role', 'article');
+    card.setAttribute('aria-label', `${nutritionData.name} 영양 정보 카드`);
 
     // ============================================================
     // 2단계: 카드 헤더 만들기 (음식 이름 + 분량)
@@ -372,6 +405,10 @@ function createNutritionItem(icon, label, value, unit, highlight = false) {
     const item = document.createElement('div');
     item.className = 'nutrition-item';
 
+    // Week 3: 접근성 개선 - ARIA 속성 추가
+    item.setAttribute('role', 'group');
+    item.setAttribute('aria-label', `${label} ${value}${unit}`);
+
     // 왼쪽: 라벨 영역 (아이콘 + 텍스트)
     const labelDiv = document.createElement('div');
     labelDiv.className = 'nutrition-label';
@@ -380,6 +417,7 @@ function createNutritionItem(icon, label, value, unit, highlight = false) {
     const iconSpan = document.createElement('span');
     iconSpan.className = 'nutrition-icon';
     iconSpan.textContent = icon;
+    iconSpan.setAttribute('aria-hidden', 'true'); // 아이콘은 스크린 리더에서 숨김
 
     // 라벨 텍스트
     const labelText = document.createElement('span');
@@ -393,6 +431,7 @@ function createNutritionItem(icon, label, value, unit, highlight = false) {
     const valueDiv = document.createElement('div');
     valueDiv.className = 'nutrition-value';
     valueDiv.textContent = `${value}${unit}`;
+    valueDiv.setAttribute('aria-live', 'polite'); // 값 변경 시 알림
 
     // 항목 조립
     item.appendChild(labelDiv);
